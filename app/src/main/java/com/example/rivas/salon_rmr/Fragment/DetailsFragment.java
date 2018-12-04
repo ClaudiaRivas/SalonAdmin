@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.rivas.salon_rmr.Apputilities.BaseFragment;
 import com.example.rivas.salon_rmr.Model.Item;
 import com.example.rivas.salon_rmr.R;
 
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends BaseFragment {
 
     TextView txtDetalleTitulo,txtDetalleNombre,txtDetalleDescripcion,txtDetallePrecio;
     ImageView imagDetalleItem;
@@ -36,18 +37,22 @@ public class DetailsFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_details, container, false);
 
-        txtDetalleTitulo = view.findViewById(R. id.textDetalleTitulo);
-        txtDetalleNombre = view.findViewById(R. id.textDetalleNombre);
-        txtDetalleDescripcion = view.findViewById(R. id.textDetalleDescripcion);
-        txtDetallePrecio = view.findViewById(R. id.textDetallePrecio);
-        imagDetalleItem = view.findViewById(R. id.imgDetalleItem);
-        btnReservar = view.findViewById(R. id.btnReservar);
+        txtDetalleTitulo        = view.findViewById(R. id.textDetalleTitulo);
+        txtDetalleNombre        = view.findViewById(R. id.textDetalleNombre);
+        txtDetalleDescripcion   = view.findViewById(R. id.textDetalleDescripcion);
+        txtDetallePrecio        = view.findViewById(R. id.textDetallePrecio);
+        imagDetalleItem         = view.findViewById(R. id.imgDetalleItem);
+        btnReservar             = view.findViewById(R. id.btnReservar);
 
         if(item!=null){
             //txtDetalleTitulo.setText(item.ge);
             txtDetalleNombre.setText(item.getNombre());
             txtDetalleDescripcion.setText(item.getDescripcion());
             txtDetallePrecio.setText(item.getPrecio());
+
+            if(item.getImgItem()!=null){
+                imagDetalleItem.setImageBitmap(item.getImgItem());
+            }
         }
         return view;
 

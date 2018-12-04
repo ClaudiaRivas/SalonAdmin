@@ -13,12 +13,17 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.example.rivas.salon_rmr.Apputilities.BaseFragment;
 import com.example.rivas.salon_rmr.R;
 
-public class ProductFragment extends Fragment {
-
+public class ProductFragment extends BaseFragment {
 
     CardView cardViewcabello, cardViewjoyeria , cardViewunas , cardViewmaquillaje;
+
+    private static FragmentProductoGenerico mFragmentCabello    = new FragmentProductoGenerico();
+    private static FragmentProductoGenerico mFragmentJoyeria    = new FragmentProductoGenerico();
+    private static FragmentProductoGenerico mFragmentMaquillaje = new FragmentProductoGenerico();
+    private static FragmentProductoGenerico mFragmentUnas       = new FragmentProductoGenerico();
 
 
     @Nullable
@@ -31,12 +36,13 @@ public class ProductFragment extends Fragment {
         cardViewmaquillaje = (CardView)view.findViewById(R.id.cardviewmaquillaje);
         cardViewunas = (CardView)view.findViewById(R.id.cardviewunas);
 
+        initProductFragment();
 
         cardViewcabello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO pendiente referencia
-                cargarFragmento("Productos de cabello","producto_cabello");
+                cargarFragmento(mFragmentCabello);
             }
         });
 
@@ -44,7 +50,7 @@ public class ProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO pendiente referencia
-                cargarFragmento("Productos de joyeria","producto_joyeria");
+                cargarFragmento(mFragmentJoyeria);
             }
         });
 
@@ -52,7 +58,7 @@ public class ProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO pendiente referencia
-                cargarFragmento("Productos de maquillaje","producto_maquillaje");
+                cargarFragmento(mFragmentMaquillaje);
             }
         });
 
@@ -60,30 +66,38 @@ public class ProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO pendiente referencia
-                cargarFragmento("Productos de uñas","producto_uñas");
+                cargarFragmento(mFragmentUnas);
             }
         });
         return view;
-
     }
 
 
-    private void cargarFragmento(String titulo,String referencia){
-        //Es el fragmento nuevo que quiero mostrar
-        FragmentProductoGenerico fragmentProductoGenerico = new FragmentProductoGenerico();
-        //establecer titulo y referencia de la BD
-        fragmentProductoGenerico.setTitulo(titulo);
-        fragmentProductoGenerico.setReferencia(referencia);
-        //creo una transaccion de fragmentos
-        FragmentManager transaction = getFragmentManager();
-        //iniciar la transaccion
-        FragmentTransaction fragmentTransaction = transaction.beginTransaction();
-        //reemplazar el fragmento actual con el nuevo
+    private void initProductFragment(){
+        //inicializar el cabello
+        mFragmentCabello.setTitulo("Productos de cabello");
+        mFragmentCabello.setReferencia("producto_cabello");
+        mFragmentCabello.setRutaImg("img_producto/cabello");
 
+        //inicializar la joyeria
+        mFragmentJoyeria.setTitulo("Productos de joyeria");
+        mFragmentJoyeria.setReferencia("producto_joyeria");
+        mFragmentJoyeria.setRutaImg("img_producto/joyeria");
 
-        fragmentTransaction.replace(R.id.fragmentProduct, fragmentProductoGenerico);
-        fragmentTransaction.addToBackStack(null);
-        //guardar cambios
-        fragmentTransaction.commit();
+        //inicializar el maquillaje
+        mFragmentMaquillaje.setTitulo("Productos de maquillaje");
+        mFragmentMaquillaje.setReferencia("producto_maquillaje");
+        mFragmentMaquillaje.setRutaImg("img_producto/maquillaje");
+
+        //inicializar las unias
+        mFragmentUnas.setTitulo("Productos de uñas");
+        mFragmentUnas.setReferencia("producto_uñas");
+        mFragmentUnas.setRutaImg("img_producto/uñas");
+    }
+
+    private void cargarFragmento(FragmentProductoGenerico frmProducto){
+        if (mFragmentNavigation != null) {
+            mFragmentNavigation.pushFragment(frmProducto);
+        }
     }
 }
